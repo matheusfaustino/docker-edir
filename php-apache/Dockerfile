@@ -2,7 +2,7 @@ FROM php:5.6-apache
 
 COPY php.ini /usr/local/etc/php/
 
-# install php dependency 
+# install php dependency
 RUN apt-get update && apt-get install -y \
       vim \
       git \
@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
   && docker-php-ext-install -j$(nproc) iconv mcrypt intl mysql mysqli pdo pdo_mysql mbstring exif zip \
   && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install -j$(nproc) gd
-  
+
 RUN pecl install xdebug apcu-4.0.10 && \
     docker-php-ext-enable xdebug apcu
 
@@ -36,7 +36,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # execute composer without Xdebug
 RUN echo "alias composer='php -n -dextension=zip.so -dextension=gd.so /usr/local/bin/composer'" >> ~/.bashrc \
     && echo "export TERM=xterm" >> ~/.bashrc
-    
+    && echo "alias xphp='XDEBUG_CONFIG=\"idekey=PHPSTORM\" \
+            php \
+            -dxdebug.idekey=PHPSTORM \
+            -dxdebug.remote_host=172.17.0.1 \
+            -dxdebug.remote_port=9000 \
+            -dxdebug.default_enable=1 \
+            -dxdebug.remote_enable=1'" >> ~/.bashrc
+
 #change www-data`s UID inside a Dockerfile
 RUN usermod -u 1000 www-data
 
