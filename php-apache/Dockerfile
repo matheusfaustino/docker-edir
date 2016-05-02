@@ -35,8 +35,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # execute composer without Xdebug
 RUN echo "alias composer='php -n -dextension=zip.so -dextension=gd.so /usr/local/bin/composer'" >> ~/.bashrc \
-    && echo "export TERM=xterm" >> ~/.bashrc
-    && echo "alias xphp='XDEBUG_CONFIG=\"idekey=PHPSTORM\" \
+    && echo "export TERM=xterm" >> ~/.bashrc \
+    && echo -e "alias xphp='XDEBUG_CONFIG=\"idekey=PHPSTORM\" \
             php \
             -dxdebug.idekey=PHPSTORM \
             -dxdebug.remote_host=172.17.0.1 \
