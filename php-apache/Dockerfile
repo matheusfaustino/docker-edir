@@ -4,6 +4,7 @@ COPY php.ini /usr/local/etc/php/
 
 # install php dependency
 RUN apt-get update && apt-get install -y \
+      bash-completion \
       vim \
       git \
       curl \
@@ -42,7 +43,15 @@ RUN echo "alias composer='php -n -dextension=zip.so -dextension=gd.so /usr/local
             -dxdebug.remote_host=172.17.0.1 \
             -dxdebug.remote_port=9000 \
             -dxdebug.default_enable=1 \
-            -dxdebug.remote_enable=1'" >> ~/.bashrc
+            -dxdebug.remote_enable=1'" >> ~/.bashrc \
+    && echo "# enable bash completion in interactive shells \
+             if ! shopt -oq posix; then \
+                 if [ -f /usr/share/bash-completion/bash_completion ]; then \
+                    . /usr/share/bash-completion/bash_completion \
+                 elif [ -f /etc/bash_completion ]; then \
+                    . /etc/bash_completion \
+                 fi
+             fi"  >> ~/.bashrc
 
 #change www-data`s UID inside a Dockerfile
 RUN usermod -u 1000 www-data
