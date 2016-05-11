@@ -1,3 +1,3 @@
 ###TODO
 
-- [ ] Implement initial database structure
+- Implement initial database structure
