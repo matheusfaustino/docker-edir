@@ -35,7 +35,7 @@ RUN a2enmod rewrite
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # execute composer without Xdebug
-RUN echo "alias composer='php -n -dextension=zip.so -dextension=gd.so /usr/local/bin/composer'" >> ~/.bashrc \
+RUN echo "alias composer='php -n -dextension=zip.so -dextension=gd.so -dextension=mbstring.so -dextension=apcu.so -dextension=intl.so -dextension=exif.so /usr/local/bin/composer'" >> ~/.bashrc \
     && echo "export TERM=xterm" >> ~/.bashrc \
     && echo -e "alias xphp='XDEBUG_CONFIG=\"idekey=PHPSTORM\" \
             php \
