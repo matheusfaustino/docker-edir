@@ -34,24 +34,11 @@ RUN a2enmod rewrite
 # add composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# execute composer without Xdebug
-RUN echo "alias composer='php -n -dextension=zip.so -dextension=gd.so -dextension=mbstring.so -dextension=apcu.so -dextension=intl.so -dextension=exif.so /usr/local/bin/composer'" >> ~/.bashrc \
-    && echo "export TERM=xterm" >> ~/.bashrc \
-    && echo -e "alias xphp='XDEBUG_CONFIG=\"idekey=PHPSTORM\" \
-            php \
-            -dxdebug.idekey=PHPSTORM \
-            -dxdebug.remote_host=172.17.0.1 \
-            -dxdebug.remote_port=9000 \
-            -dxdebug.default_enable=1 \
-            -dxdebug.remote_enable=1'" >> ~/.bashrc \
-    && echo "# enable bash completion in interactive shells \
-             if ! shopt -oq posix; then \
-                 if [ -f /usr/share/bash-completion/bash_completion ]; then \
-                    . /usr/share/bash-completion/bash_completion \
-                 elif [ -f /etc/bash_completion ]; then \
-                    . /etc/bash_completion \
-                 fi
-             fi"  >> ~/.bashrc
+# add bash config file
+COPY bashrc.template /root
+
+# call that file into bashrc
+RUN echo ". ~/bashrc.template" >> ~/.bashrc
 
 #change www-data`s UID inside a Dockerfile
 RUN usermod -u 1000 www-data
@@ -71,6 +58,5 @@ xdebug.idekey=PHPSTORM\n \
 xdebug.profiler_output_dir=/var/www/html\n \
 xdebug.profiler_enable_trigger=1\
 " >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
 
 EXPOSE 80
