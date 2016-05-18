@@ -53,7 +53,7 @@ RUN echo ". ~/bashrc.template" >> ~/.bashrc
 RUN usermod -u 1000 www-data
 
 # Xdebug config
-RUN echo -e "\
+RUN echo "\
 xdebug.var_display_max_depth = 10\n \
 xdebug.var_display_max_children = 256\n \
 xdebug.var_display_max_data = 1024\n \
