@@ -28,7 +28,6 @@ RUN cd / && git clone git://github.com/twigphp/Twig.git \
     && ./configure \
     && make \
     && make install \
-    # && echo "extension=twig.so #For Unix systems" >> /usr/local/etc/php/php.ini
     && docker-php-ext-enable twig
 
 # change default apache folder
