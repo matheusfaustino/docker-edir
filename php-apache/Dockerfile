@@ -22,6 +22,15 @@ RUN apt-get update && apt-get install -y \
 RUN pecl install xdebug apcu-4.0.10 && \
     docker-php-ext-enable xdebug apcu
 
+RUN cd / && git clone git://github.com/twigphp/Twig.git \
+    && cd Twig/ext/twig \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    # && echo "extension=twig.so #For Unix systems" >> /usr/local/etc/php/php.ini
+    && docker-php-ext-enable twig
+
 # change default apache folder
 RUN sed -i 's|/var/www/html|/var/www/html/web|g' /etc/apache2/apache2.conf
 
