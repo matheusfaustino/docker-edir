@@ -18,6 +18,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=abc123
       - TERM=xterm
+    links:
+      - elasticsearch23
 
   elasticsearch23:
     image: elasticsearch:2.3
