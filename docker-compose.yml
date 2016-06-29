@@ -15,6 +15,7 @@ services:
 
   mysql56:
     image: mysql:5.6
+    mem_limit: 512M
     environment:
       - MYSQL_ROOT_PASSWORD=abc123
       - TERM=xterm
@@ -23,6 +24,7 @@ services:
 
   elasticsearch23:
     image: elasticsearch:2.3
+    mem_limit: 512M
     environment:
       - TERM=xterm
 
